@@ -1,0 +1,3 @@
+cd 到该目录下   运行 node Z-OpenHtmlServer.js
+即可在浏览器的3334端口看到打包后的项目内容，即dist里面的index.html
+localhost:3334
