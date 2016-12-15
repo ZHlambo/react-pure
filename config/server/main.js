@@ -4,7 +4,6 @@ import serve from 'koa-static'
 import config from '../config'
 import webpack from 'webpack'
 import webpackConfig from '../webpack.config.js'
-import webpackMiddleware from 'koa-webpack';
 import historyApiFallback from 'koa-connect-history-api-fallback'
 import webpackDevMiddleware from '../middleware/webpack-dev'
 import _debug from 'debug'
