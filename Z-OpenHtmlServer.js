@@ -1,3 +1,8 @@
+// cd 到该目录下   运行 node Z-OpenHtmlServer.js
+// 即可在浏览器的${PORT}端口看到打包后的项目内容，即dist里面的index.html
+// localhost:${PORT}
+var path=require('path');
+const PORT = 3334
 var http = require('http');
 var url=require('url');
 var fs=require('fs');
@@ -21,8 +26,6 @@ var mine= {
   "wmv": "video/x-ms-wmv",
   "xml": "text/xml"
 };
-var path=require('path');
-const PORT = 3334
 
 var server = http.createServer(function (request, response) {
     var pathname = url.parse(request.url).pathname;
