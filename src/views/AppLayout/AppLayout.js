@@ -6,6 +6,6 @@ export default class AppLayout extends Component {
     this.state = {}
   }
   render() {
-    return <div>"new react"</div> 
+    return <div>{"new React"}</div> 
   }
 }

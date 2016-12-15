@@ -1,4 +1,5 @@
 import superagent from 'superagent';
+import {getAuthorization} from './helper'
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
@@ -24,6 +25,7 @@ methods.forEach(method => {
   } = {}) => new Promise((resolve, reject) => {
     const _request = superagent[method](formatUrl(path,operateId));
     if (headers) {
+      if(headers.Authorization) headers.Authorization = getAuthorization(headers.Authorization)
       _request.set(Object.assign({
         'content-type': 'application/json',
         'accept': 'application/json',

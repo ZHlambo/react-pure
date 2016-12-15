@@ -11,7 +11,6 @@ export default function configureStore (initialState = {}, history) {
     promiseMiddleware({}),
     routerMiddleware(history)
   )
-
   // Create final store and subscribe router in debug env ie. for devtools
   const store = middleware(createStore)(rootReducer, initialState)
 
