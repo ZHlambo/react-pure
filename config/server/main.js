@@ -6,6 +6,8 @@ import webpack from 'webpack'
 import webpackConfig from '../webpack.config.js'
 import historyApiFallback from 'koa-connect-history-api-fallback'
 import webpackDevMiddleware from '../middleware/webpack-dev'
+import webpackHotMiddleware from '../middleware/webpack-hmr'
+
 import _debug from 'debug'
 //开发环境以及正式环境下的config处理
 const debug = _debug("app:server")
@@ -20,6 +22,8 @@ if (config.env === 'development') {
   app.use(historyApiFallback({ verbose: false }))
   //使用webpack
   app.use(webpackDevMiddleware(compiler, publicPath))
+  //热更新功能，修改代码实时刷新到浏览器ui
+  app.use(webpackHotMiddleware(compiler))
   //静态资源不编译，直接使用，在compile output到dist文件下时，直接复制过去
   app.use(convert(serve(config.utils_paths.client('static'))))
 }else {

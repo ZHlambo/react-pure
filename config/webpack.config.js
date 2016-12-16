@@ -2,7 +2,10 @@ import config from './config'
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import cssnano from 'cssnano'
+const paths = config.utils_paths
 
+const APP_ENTRY_PATH = paths.base(config.dir_client) + '/main.js'
 const plugins = [
     new HtmlWebpackPlugin({
         template: config.utils_paths.client('index.html'),
@@ -15,11 +18,9 @@ const plugins = [
     }),
 ]
 
-
-
 const webpackConfig = {
     plugins,
-    entry: {main:'./src/main.js',vendor: config.compiler_vendor},
+    entry: {main:[APP_ENTRY_PATH],vendor: config.compiler_vendor},
     output: {
         path: config.utils_paths.base(config.dir_dist),
         filename: `[name].[${config.compiler_hash_type}].js`,
@@ -61,10 +62,32 @@ webpackConfig.module.loaders.push({
   loaders: [ 'style', cssModulesLoader, 'postcss' ]
 })
 
+webpackConfig.postcss = [
+  cssnano({
+    autoprefixer: {
+      add: true,
+      remove: true,
+      browsers: ['last 2 versions']
+    },
+    discardComments: {
+      removeAll: true
+    },
+    discardUnused: false,
+    mergeIdents: false,
+    reduceIdents: false,
+    safe: true,
+    sourcemap: true
+  })
+]
+
 
 //development and production env config
-if(config.env === "development"){//log出来的东西知道哪个文件,开发才使用，否则文件很大
+if(config.env === "development"){
+  //log出来的东西知道哪个文件,开发才使用，否则文件很大
    webpackConfig.devtool = config.compiler_devtool
+   //热更新功能，修改代码实时刷新到浏览器ui
+   webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin(),)
+   webpackConfig.entry.main = [APP_ENTRY_PATH, `webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`]
  }else if(config.env === 'production'){
    //压缩代码,测试效果：js 1900K-->600K
    webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({compress: { warnings: false }}),)
