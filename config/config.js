@@ -1,7 +1,7 @@
 import path from "path"
 var config={
   server_host              :getIPAdress(),
-  server_port              :6868,
+  server_port              :3333,
   static                   :"src/static",//暂时无用
   compiler_hash_type       :"hash",//hash类型
   path_base                : path.resolve(__dirname, '..'),
@@ -10,8 +10,9 @@ var config={
   env                      :process.env.NODE_ENV || 'development',
   compiler_vendor          :[ 'history', 'react-redux', 'react-router', 'react-router-redux','react','redux' ],
   compiler_devtool         :'source-map',//wepackconfig 49.js 设置后log出来的东西知道哪个文件,development才使用，否则生成文件很大
-  // compiler_stats           : {chunks : false,chunkModules : false,colors : true},//webpack 不打印每个文件打包过程 undefined则打印
+  compiler_stats           : {chunks : false,chunkModules : false,colors : true},//webpack 不打印每个文件打包过程 undefined则打印
 }
+console.log(process.env.NODE_ENV);
 config.utils_paths=(() => {
 const resolve = path.resolve
 const base = (...args) =>
@@ -37,7 +38,8 @@ config.globals = {//暂无使用
   '__DEV__'      : config.env === 'development',
   '__PROD__'     : config.env === 'production',
   '__TEST__'     : config.env === 'test',
-  '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
+  '__BASENAME__' : JSON.stringify(process.env.BASENAME || ''),
+  "__DEBUG_NEW_WINDOW__":false
 }
 
 module.exports = config

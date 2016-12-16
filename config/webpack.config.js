@@ -16,6 +16,8 @@ const plugins = [
             collapseWhitespace: true
         }
     }),
+    //配合UglifyJsPlugin，否则会提示warning
+    new webpack.DefinePlugin(config.globals),//实现全代码替换字段
 ]
 
 const webpackConfig = {
@@ -93,8 +95,6 @@ if(config.env === "development"){
    webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({compress: { warnings: false }}),)
    //entry中定义了vendor，把几个模块打包进vendor
    webpackConfig.plugins.push(new webpack.optimize.CommonsChunkPlugin({ names: ['vendor'] }),)
-   //配合UglifyJsPlugin，否则会提示warning
-   webpackConfig.plugins.push(new webpack.DefinePlugin({'process.env': { NODE_ENV: JSON.stringify('production') }}),)
    /*css 分离打包*/
    webpackConfig.plugins.push(new ExtractTextPlugin(`[name].[${config.compiler_hash_type}].css`, { allChunks: true }))
    webpackConfig.module.loaders.filter((loader) =>
