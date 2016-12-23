@@ -12,7 +12,6 @@ var config={
   compiler_devtool         :'source-map',//wepackconfig 49.js 设置后log出来的东西知道哪个文件,development才使用，否则生成文件很大
   compiler_stats           : {chunks : false,chunkModules : false,colors : true},//webpack 不打印每个文件打包过程 undefined则打印
 }
-console.log(process.env.NODE_ENV);
 config.utils_paths=(() => {
 const resolve = path.resolve
 const base = (...args) =>
@@ -36,6 +35,7 @@ config.globals = {//暂无使用
   },
   'NODE_ENV'     : config.env,
   '__DEV__'      : config.env === 'development',
+  '__DEBUG__'      : config.env === 'development',
   '__PROD__'     : config.env === 'production',
   '__TEST__'     : config.env === 'test',
   '__BASENAME__' : JSON.stringify(process.env.BASENAME || ''),

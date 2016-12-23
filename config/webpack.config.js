@@ -63,6 +63,10 @@ webpackConfig.module.loaders.push({
   // include: cssModulesRegex,
   loaders: [ 'style', cssModulesLoader, 'postcss' ]
 })
+webpackConfig.sassLoader = {//scss @import 'base' 路径到styles找base文件
+  includePaths: paths.client('styles')
+}
+
 
 webpackConfig.postcss = [
   cssnano({
