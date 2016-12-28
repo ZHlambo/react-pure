@@ -2,7 +2,7 @@
   "name": "test",
   "version": "1.0.0",
   "description": "",
-  "moduleRoots": ["src","aaa"],
+  "moduleRoots": ["src"],
   "scripts": {
     "dev": "better-npm-run dev",
     "compile": "better-npm-run compile",
